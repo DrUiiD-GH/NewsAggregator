@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>News aggregator</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/5.1.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand active_nav" href="/">Добавление источника новостей</a>
+    <a class="navbar-brand" href="/newsList">Список новостей</a>
+</nav>
+
+<main role="main" class="container main_content">
+
+    <h2>Уже добавленные источники</h2>
+    <table border="1">
+        <tr>
+            <th>Название</th>
+            <th>URL</th>
+            <th>Скачать правила парсинга</th>
+            <th>Удалить источник</th>
+        </tr>
+        <tr th:each ="source : ${addedNewsSources}">
+            <td th:utext="${source.name}"></td>
+            <td th:utext="${source.url}"></td>
+            <td>
+                <a th:href="@{|/downloadRule?ruleId=${source.ruleId}|}">Скачать</a>
+            </td>
+            <td>
+                <a th:href="@{|/removeNewsSource?id=${source.id}|}" class="remove-link">Удалить</a>
+            </td>
+        </tr>
+    </table>
+
+    <h1>Добавьте источник новостей</h1>
+    <form action="#" th:action="@{/addNewsSource}" th:object="${newsSource}" method="post" enctype="multipart/form-data">
+        <p>Введите название новостного сайта: <input type="text" th:field="*{name}" /></p>
+        <p>Введите адрес новостного сайта или его RSS-ленты: <input type="text" th:field="*{url}" /></p>
+        <p>Выберите файл с правилами парсинга: <input type="file" name="file" /></p>
+        <p><input type="submit" value="Добавить источник" /> <input type="reset" value="Стереть данные формы" /></p>
+    </form>
+</main>
+<!-- /.container -->
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

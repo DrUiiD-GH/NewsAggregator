@@ -1,0 +1,38 @@
+.main_content {
+    margin-top: 100px;
+}
+
+.active_nav{
+    color: coral !important;
+}
+
+.remove-link{
+    color: orangered;
+}
+
+.search-form{
+    display: inline-block;
+}
+
+.navbar-brand:hover {
+    background: dimgrey;
+}
+
+.active_page_number{
+    background: gold;
+}
+
+.page_item {
+    align-items: center;
+    background: none;
+    border: 0.125em solid #fff;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-size: 1.15rem;
+    font-weight: 400;
+    justify-content: center;
+    margin: 0 0.35em;
+    position: relative;
+    text-align: center;
+}

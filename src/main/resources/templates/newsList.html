@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>News aggregator</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/5.1.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/">Добавление источника новостей</a>
+    <a class="navbar-brand active_nav" href="/newsList">Список новостей</a>
+</nav>
+
+<main class="container main_content">
+    <h1>Новости</h1>
+    <form action="#" th:action="@{/newsList}" th:object="${search}" method="post" class="search-form">
+        <p><label>
+            <input type="text" th:field="*{title}"/>
+        </label></p>
+        <p><input type="submit" value="Поиск" />
+        </p>
+    </form>
+
+    <a th:href="@{/newsList}">Очистить форму</a>
+
+    <table border="1" class="table table-fluid">
+        <thead>
+        <tr>
+            <th>Источник</th>
+            <th>Категория</th>
+            <th>Дата публикации</th>
+            <th>Новость</th>
+            <th>Автор</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${newsItems}">
+            <td th:text="${item.getNewsSource().name}"></td>
+            <td th:text="${item.category}"></td>
+            <td th:text="${item.publishedDate}"></td>
+            <td>
+                <h6 th:text="${item.title}"></h6>
+                <img th:if="${item.imgSrc != null && !item.imgSrc.isEmpty()}" th:src="${item.imgSrc}" width="200"/>
+                <p th:if="${item.description != item.title}" th:text="${item.description}"></p>
+
+                <a th:href="${!item.link.startsWith('/') ? item.link : item.getNewsSource().url + item.link}"
+                   target="_blank">
+                    Подробнее
+                </a>
+            </td>
+            <td th:text="${item.author}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${maxPages > 0}" class="pagination">
+        <div th:each="pageNumber : ${#numbers.sequence(1, maxPages)}" class="page_item">
+            <!--/*@thymesVar id="size" type="JDOMAbout"*/-->
+            <a th:class="${pageNumber==currentPage} ? active_page_number"
+               th:href="@{/newsList(size=${size}, page=${pageNumber}, search = ${search.title})}"
+               th:text="${pageNumber}"></a>
+        </div>
+    </div>
+
+</main>
+<!-- /.container -->
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

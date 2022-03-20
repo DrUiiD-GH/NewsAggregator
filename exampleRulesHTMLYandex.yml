@@ -1,0 +1,13 @@
+source: HTML
+feedTag: div
+feedClass: rubric
+titleTag: a
+titleClass: story__title
+itemTag: div
+itemClass: story__content
+descriptionTag: div
+descriptionClass: story__text
+publishedDateClass: story__date
+categoryClass: rubric-label
+uriClass: link_theme_black
+imgClass: image

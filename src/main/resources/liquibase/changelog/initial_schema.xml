@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="00000000000000" author="course">
+        <createSequence sequenceName="hibernate_sequence" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="00000000000001" author="course">
+        <createTable tableName="parse_rule">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="source" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="feed_class" type="varchar(1000)"/>
+            <column name="feed_tag" type="varchar(1000)"/>
+            <column name="item_class" type="varchar(1000)"/>
+            <column name="item_tag" type="varchar(1000)"/>
+            <column name="title_class" type="varchar(1000)"/>
+            <column name="title_tag" type="varchar(1000)"/>
+            <column name="description_class" type="varchar(1000)"/>
+            <column name="description_tag" type="varchar(1000)"/>
+            <column name="publishedDate_class" type="varchar(1000)"/>
+            <column name="publishedDate_tag" type="varchar(1000)"/>
+            <column name="category_class" type="varchar(1000)"/>
+            <column name="category_tag" type="varchar(1000)"/>
+            <column name="img_class" type="varchar(1000)"/>
+            <column name="author_class" type="varchar(1000)"/>
+            <column name="uri_class" type="varchar(1000)"/>
+            <column name="uri_tag" type="varchar(1000)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="00000000000002" author="course">
+        <createTable tableName="news_item">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(1000)"/>
+            <column name="author" type="varchar(255)"/>
+            <column name="category" type="varchar(255)"/>
+            <column name="imgSrc" type="varchar(255)"/>
+            <column name="description" type="clob"/>
+            <column name="publishedDate" type="varchar(255)"/>
+            <column name="link" type="varchar(1000)"/>
+            <column name="news_source_id" type="bigint"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="00000000000003" author="course">
+        <createTable tableName="news_source">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="url" type="varchar(1000)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="parse_rule_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="00000000000004" author="course">
+        <addForeignKeyConstraint baseColumnNames="news_source_id"
+                                 baseTableName="news_item"
+                                 constraintName="fk_news_item"
+                                 referencedColumnNames="id"
+                                 referencedTableName="news_source"/>
+
+        <addForeignKeyConstraint baseColumnNames="parse_rule_id"
+                                 baseTableName="news_source"
+                                 constraintName="fk_news_source"
+                                 referencedColumnNames="id"
+                                 referencedTableName="parse_rule"/>
+    </changeSet>
+</databaseChangeLog>
